@@ -85,7 +85,7 @@ function ServerCard(props: IData) {
           </Paper>
         </Card.Section>
         <Card.Section>
-          <OnlineRing online={online} onlineFor={onlineDetails[0]} />
+          <OnlineRing online={online} onlineFor={onlineFor} />
         </Card.Section>
       </Card>
     </Paper>

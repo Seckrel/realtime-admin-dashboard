@@ -1,5 +1,8 @@
 import { Route, Switch } from "wouter";
 import DashBoard from "../../pages/home";
+import { Chart, RadialLinearScale, ArcElement } from "chart.js";
+
+Chart.register(RadialLinearScale, ArcElement);
 
 const Temp = () => <>{"temp"}</>;
 
