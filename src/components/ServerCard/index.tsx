@@ -6,8 +6,11 @@ import {
   RingProgress,
   Paper,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
 import { HrsToPercentage } from "../../utils/timedate.utils";
+import { useContext } from "react";
+import { OnlineDetailContext } from "../../pages/home/HomeDashArea";
 
 interface IOnlineDetails {
   [index: number]: number;
@@ -64,30 +67,36 @@ function ServerCard(props: IData) {
     onlineDetails,
     ...reProps
   } = props;
+  const onlineDetailsC = useContext(OnlineDetailContext);
+
   return (
-    <Paper shadow={"xl"} {...reProps}>
-      <Card
-        key={props.id}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "start",
-        }}
+    <Paper shadow={"xl"} {...reProps} sx={{ zIndex: 2 }}>
+      <UnstyledButton
+        onClick={() => onlineDetailsC[1]({ name: name, data: onlineDetails })}
       >
-        <Card.Section sx={{ marginRight: "10px" }}>
-          <Paper p={"md"} shadow="xs">
-            <Group>
-              <Text size="xl">{name}</Text>
-              <Badge color={online ? "green" : "red"} variant="dot">
-                {online ? "Online" : "Offline"}
-              </Badge>
-            </Group>
-          </Paper>
-        </Card.Section>
-        <Card.Section>
-          <OnlineRing online={online} onlineFor={onlineFor} />
-        </Card.Section>
-      </Card>
+        <Card
+          key={props.id}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "start",
+          }}
+        >
+          <Card.Section sx={{ marginRight: "10px" }}>
+            <Paper p={"md"} shadow="xs">
+              <Group>
+                <Text size="xl">{name}</Text>
+                <Badge color={online ? "green" : "red"} variant="dot">
+                  {online ? "Online" : "Offline"}
+                </Badge>
+              </Group>
+            </Paper>
+          </Card.Section>
+          <Card.Section>
+            <OnlineRing online={online} onlineFor={onlineFor} />
+          </Card.Section>
+        </Card>
+      </UnstyledButton>
     </Paper>
   );
 }

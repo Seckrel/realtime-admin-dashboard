@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import {
   Navbar,
   Center,
@@ -6,6 +6,7 @@ import {
   UnstyledButton,
   createStyles,
   Stack,
+  useMantineColorScheme,
 } from "@mantine/core";
 import {
   TablerIcon,
@@ -18,6 +19,8 @@ import {
   IconSettings,
   IconLogout,
   IconSwitchHorizontal,
+  IconSunHigh as SunHigh,
+  IconMoon
 } from "@tabler/icons";
 import { Link } from "wouter";
 
@@ -56,15 +59,17 @@ const useStyles = createStyles((theme) => ({
 
 interface NavbarLinkProps {
   icon: TablerIcon;
+  iconColor?: string;
   label: string;
   active?: boolean;
   onClick?(): void;
-  href: string;
+  href?: string;
 }
 
 function NavbarLink({
   icon: Icon,
   label,
+  iconColor,
   active,
   onClick,
   href,
@@ -72,12 +77,12 @@ function NavbarLink({
   const { classes, cx } = useStyles();
   return (
     <Tooltip label={label} position="right" transitionDuration={0}>
-      <Link href={`${href}`} onClick={onClick}>
+      <Link href={href === undefined ? "" : href} onClick={onClick}>
         <UnstyledButton
           className={cx(classes.link, { [classes.active]: active })}
         >
           <>
-            <Icon stroke={1.5} />
+            <Icon stroke={1.5} color={iconColor} />
           </>
         </UnstyledButton>
       </Link>
@@ -97,6 +102,8 @@ const mockdata = [
 
 function Menu() {
   const [active, setActive] = useState(0);
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
 
   const links = mockdata.map((link, index) => (
     <NavbarLink
@@ -117,8 +124,12 @@ function Menu() {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={0}>
-          <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
-          <NavbarLink icon={IconLogout} label="Logout" />
+          <NavbarLink
+            icon={dark?IconMoon: SunHigh}
+            iconColor={dark ? "yellow" : "blue"}
+            label=""
+            onClick={() => toggleColorScheme()}
+          />
         </Stack>
       </Navbar.Section>
     </Navbar>
