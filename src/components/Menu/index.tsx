@@ -1,7 +1,6 @@
-import { ReactElement, useState } from "react";
+import { useState } from "react";
 import {
   Navbar,
-  Center,
   Tooltip,
   UnstyledButton,
   createStyles,
@@ -12,15 +11,8 @@ import {
   TablerIcon,
   IconHome2,
   IconGauge,
-  IconDeviceDesktopAnalytics,
-  IconFingerprint,
-  IconCalendarStats,
-  IconUser,
-  IconSettings,
-  IconLogout,
-  IconSwitchHorizontal,
   IconSunHigh as SunHigh,
-  IconMoon
+  IconMoonStars,
 } from "@tabler/icons";
 import { Link } from "wouter";
 
@@ -93,11 +85,6 @@ function NavbarLink({
 const mockdata = [
   { icon: IconGauge, label: "Dashboard", link: "/" },
   { icon: IconHome2, label: "Home", link: "/temp" },
-  // { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-  // { icon: IconCalendarStats, label: 'Releases' },
-  // { icon: IconUser, label: 'Account' },
-  // { icon: IconFingerprint, label: 'Security' },
-  // { icon: IconSettings, label: 'Settings' },
 ];
 
 function Menu() {
@@ -125,8 +112,8 @@ function Menu() {
       <Navbar.Section>
         <Stack justify="center" spacing={0}>
           <NavbarLink
-            icon={dark?IconMoon: SunHigh}
-            iconColor={dark ? "yellow" : "blue"}
+            icon={dark ? IconMoonStars : SunHigh}
+            iconColor={dark ? "#ffec00" : "#00abfb"}
             label=""
             onClick={() => toggleColorScheme()}
           />

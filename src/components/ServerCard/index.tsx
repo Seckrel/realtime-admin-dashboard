@@ -1,39 +1,21 @@
 import {
   Card,
   Text,
-  Group,
-  Badge,
   RingProgress,
-  Paper,
-  Title,
   UnstyledButton,
+  Title,
+  Badge,
 } from "@mantine/core";
 import { HrsToPercentage } from "../../utils/timedate.utils";
-import { useContext } from "react";
-import { OnlineDetailContext } from "../../pages/home/HomeDashArea";
-
-interface IOnlineDetails {
-  [index: number]: number;
-}
-
-interface IData {
-  id: number;
-  name: string;
-  online: boolean;
-  lifeTimeOnline: string;
-  onlineFor: number;
-  offlineFor: number;
-  onlineDetails: IOnlineDetails;
-  [key: string | number]: any;
-}
+import { IData, TToogleGeneral } from "../../types";
 
 interface IOnlineRing {
   online: boolean;
-  onlineFor: number;
+  today: number;
 }
 
-const OnlineRing = ({ online, onlineFor }: IOnlineRing) => {
-  const value = online ? onlineFor : 24 - onlineFor;
+const OnlineRing = ({ online, today }: IOnlineRing) => {
+  const value = online ? today : 24 - today;
   const color = online ? "green" : "red";
 
   return (
@@ -56,48 +38,53 @@ const OnlineRing = ({ online, onlineFor }: IOnlineRing) => {
   );
 };
 
-function ServerCard(props: IData) {
-  const {
-    id,
-    name,
-    online,
-    lifeTimeOnline,
-    onlineFor,
-    offlineFor,
-    onlineDetails,
-    ...reProps
-  } = props;
-  const onlineDetailsC = useContext(OnlineDetailContext);
+interface IProps {
+  serverData: IData;
+  setToggleGeneral: (value: TToogleGeneral) => void;
+  [key: string]: any;
+}
+
+function ServerCard(props: IProps) {
+  const { serverData, setToggleGeneral, ...reProps } = props;
+  const { id, name, online, today } = serverData;
+
 
   return (
-    <Paper shadow={"xl"} {...reProps} sx={{ zIndex: 2 }}>
-      <UnstyledButton
-        onClick={() => onlineDetailsC[1]({ name: name, data: onlineDetails })}
+    <UnstyledButton
+      sx={{ width: "100%", height: "100%" }}
+      onClick={() => setToggleGeneral(id)}
+      {...reProps}
+    >
+      <Card
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+        shadow={"lg"}
       >
-        <Card
-          key={props.id}
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "start",
-          }}
-        >
-          <Card.Section sx={{ marginRight: "10px" }}>
-            <Paper p={"md"} shadow="xs">
-              <Group>
-                <Text size="xl">{name}</Text>
-                <Badge color={online ? "green" : "red"} variant="dot">
-                  {online ? "Online" : "Offline"}
-                </Badge>
-              </Group>
-            </Paper>
-          </Card.Section>
-          <Card.Section>
-            <OnlineRing online={online} onlineFor={onlineFor} />
-          </Card.Section>
-        </Card>
-      </UnstyledButton>
-    </Paper>
+        <Card.Section sx={{}}>
+          <OnlineRing online={online} today={today} />
+        </Card.Section>
+        <Card.Section p={20} sx={{ width: "60%", alignSelf: "stretch" }}>
+          <Badge
+            variant="dot"
+            color={online ? "green" : "red"}
+            pr={"lg"}
+            sx={{
+              isolation: "isolate",
+              position: "relative",
+              "&::before": {
+                position: "absolute",
+                right: 0,
+              },
+            }}
+          >
+            <Text size={"sm"}>{name}</Text>
+          </Badge>
+        </Card.Section>
+      </Card>
+    </UnstyledButton>
   );
 }
 

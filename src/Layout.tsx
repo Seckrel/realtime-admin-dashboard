@@ -1,19 +1,20 @@
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Menu from "./components/Menu";
-import { useMantineTheme } from "@mantine/core";
+import { Box } from "@mantine/core";
+import { globalStyles } from "./mantineStyles";
 
 function Layout() {
-  const theme = useMantineTheme();
+  const { classes } = globalStyles();
   return (
     <>
       <Header />
-      <section>
+      <Box className={classes.backgroundColorScheme} component="section">
         <Menu />
-        <main>
+        <Box component="main" className={classes.backgroundColorScheme}>
           <Main />
-        </main>
-      </section>
+        </Box>
+      </Box>
     </>
   );
 }
