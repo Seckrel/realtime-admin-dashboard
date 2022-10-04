@@ -1,22 +1,39 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useState, useEffect, memo } from "react";
 import { IData } from "../../types";
 import { PolarArea } from "react-chartjs-2";
-import { useMantineTheme } from "@mantine/core";
+import { useMantineTheme, Skeleton } from "@mantine/core";
+import { PADataWorker, PABgColorWorker } from "../../worker/PolarAreaWorker";
 
 interface IProps {
   GeneralData: IData[];
 }
 
+interface IChartData {
+  names: Object;
+  data: Object;
+}
+
 function PolarAreaChart(props: IProps) {
   const { GeneralData } = props;
   const theme = useMantineTheme();
+  const [chartData, setChartData] = useState<IChartData | null>(null);
+  const [chartBgColor, setChartBgColor] = useState();
 
-  const dynamicColors = useCallback(() => {
-    var r = Math.floor(Math.random() * 255);
-    var g = Math.floor(Math.random() * 255);
-    var b = Math.floor(Math.random() * 255);
-    return "rgb(" + r + "," + g + "," + b + ")";
+  useEffect(() => {
+    const worker = new Worker(PADataWorker);
+    worker.postMessage(GeneralData);
+    worker.onmessage = (e) => setChartData(e.data);
+    return () => worker.terminate();
   }, []);
+
+
+  useEffect(() => {
+    if (GeneralData.length !== 8) {
+      const worker = new Worker(PABgColorWorker);
+      worker.postMessage(GeneralData.length);
+      worker.onmessage = (e) => setChartBgColor(e.data);
+    }
+  }, [GeneralData.length]);
 
   const DefaultBgColor = [
     "rgb(255, 99, 132)",
@@ -29,27 +46,23 @@ function PolarAreaChart(props: IProps) {
     "rgb(203, 192, 86)",
   ];
 
-  const bgColorMemo = useMemo(
-    () => GeneralData.map(() => dynamicColors()),
-    [GeneralData.length]
-  );
 
   const dataMemo = useMemo(
     () => ({
-      labels: GeneralData.map((datum: IData) => datum.name),
+      labels: chartData?.names,
       datasets: [
         {
           label: "Online Duration Last 24 hrs",
-          data: GeneralData.map((datum: IData) => datum.today),
-          hoverBackgroundColor: "white",
+          data: chartData?.data,
+          hoverBackgroundColor: "rgba(0, 0, 0,0.1)",
           hoverBorderColor: "rgba(0,0,0,0.4)",
           hoverBorderWidth: 1,
           backgroundColor:
-            GeneralData.length <= 8 ? DefaultBgColor : bgColorMemo,
+            GeneralData.length <= 8 ? DefaultBgColor : chartBgColor,
         },
       ],
     }),
-    []
+    [chartData]
   );
 
   const options = {
@@ -91,11 +104,10 @@ function PolarAreaChart(props: IProps) {
   };
 
   return (
-      <PolarArea
-        data={dataMemo}
-        options={options}
-      />
+    <Skeleton visible={chartData === null} radius="xl">
+      <PolarArea data={dataMemo} options={options} />
+    </Skeleton>
   );
 }
 
-export default PolarAreaChart;
+export default memo(PolarAreaChart);

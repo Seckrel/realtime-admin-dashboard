@@ -1,42 +1,7 @@
-import {
-  Card,
-  Text,
-  RingProgress,
-  UnstyledButton,
-  Title,
-  Badge,
-} from "@mantine/core";
-import { HrsToPercentage } from "../../utils/timedate.utils";
+import { Card, Text, UnstyledButton, Badge } from "@mantine/core";
 import { IData, TToogleGeneral } from "../../types";
-
-interface IOnlineRing {
-  online: boolean;
-  today: number;
-}
-
-const OnlineRing = ({ online, today }: IOnlineRing) => {
-  const value = online ? today : 24 - today;
-  const color = online ? "green" : "red";
-
-  return (
-    <RingProgress
-      size={120}
-      thickness={12}
-      roundCaps
-      sections={[{ value: HrsToPercentage(value), color: color }]}
-      label={
-        <>
-          <Title size={8} align="center" color={online ? "green" : "red"}>
-            {online ? "Online for" : "Offline for"}
-          </Title>
-          <Text size={"md"} align="center" color={online ? "green" : "red"}>
-            {value.toFixed(1).toString()} Hrs
-          </Text>
-        </>
-      }
-    />
-  );
-};
+import OnlineRing from "../OnlineRing";
+import { globalStyles } from "../../mantineStyles";
 
 interface IProps {
   serverData: IData;
@@ -47,7 +12,7 @@ interface IProps {
 function ServerCard(props: IProps) {
   const { serverData, setToggleGeneral, ...reProps } = props;
   const { id, name, online, today } = serverData;
-
+  const { classes: globalClasses } = globalStyles();
 
   return (
     <UnstyledButton
@@ -70,15 +35,7 @@ function ServerCard(props: IProps) {
           <Badge
             variant="dot"
             color={online ? "green" : "red"}
-            pr={"lg"}
-            sx={{
-              isolation: "isolate",
-              position: "relative",
-              "&::before": {
-                position: "absolute",
-                right: 0,
-              },
-            }}
+            className={globalClasses.badgeRight}
           >
             <Text size={"sm"}>{name}</Text>
           </Badge>

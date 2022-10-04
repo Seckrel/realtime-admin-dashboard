@@ -1,11 +1,8 @@
 import VisualDashAreaGeneral from "./VisualDashAreaGeneral";
-import {
-  IData,
-  IDataContext,
-  TToogleGeneral,
-} from "../../types";
+import { IData, IDataContext, TToogleGeneral } from "../../types";
 import { createContext, useState } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
+import VisualDashAreaDetails from "../../components/VisualDashAreaDetails";
 
 const GeneralData: IData[] = [
   {
@@ -99,7 +96,11 @@ function DashBoard() {
       {toggleGeneral === "General" ? (
         <VisualDashAreaGeneral />
       ) : (
-        <div>{toggleGeneral}</div>
+        <div>
+          <VisualDashAreaDetails
+            data={GeneralData.filter((ele) => ele.id === toggleGeneral)[0]}
+          />
+        </div>
       )}
     </GeneralDataContext.Provider>
   );
