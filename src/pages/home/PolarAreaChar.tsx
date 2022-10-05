@@ -2,7 +2,9 @@ import { useMemo, useState, useEffect, memo } from "react";
 import { IData } from "../../types";
 import { PolarArea } from "react-chartjs-2";
 import { useMantineTheme, Skeleton } from "@mantine/core";
-import { PADataWorker, PABgColorWorker } from "../../worker/PolarAreaWorker";
+import { PADataWorker } from "../../worker/PolarAreaWorker";
+import { ColorGenWorker } from "../../worker/ColorGenWorker";
+import { DEFAULT_BG_COLOR } from "../../const";
 
 interface IProps {
   GeneralData: IData[];
@@ -26,25 +28,13 @@ function PolarAreaChart(props: IProps) {
     return () => worker.terminate();
   }, []);
 
-
   useEffect(() => {
     if (GeneralData.length !== 8) {
-      const worker = new Worker(PABgColorWorker);
+      const worker = new Worker(ColorGenWorker);
       worker.postMessage(GeneralData.length);
       worker.onmessage = (e) => setChartBgColor(e.data);
     }
   }, [GeneralData.length]);
-
-  const DefaultBgColor = [
-    "rgb(255, 99, 132)",
-    "rgb(75, 192, 192)",
-    "rgb(255, 205, 86)",
-    "rgb(201, 203, 207)",
-    "rgb(54, 162, 235)",
-    "rgb(86, 99, 235)",
-    "rgb(192, 75, 255)",
-    "rgb(203, 192, 86)",
-  ];
 
 
   const dataMemo = useMemo(
@@ -58,7 +48,7 @@ function PolarAreaChart(props: IProps) {
           hoverBorderColor: "rgba(0,0,0,0.4)",
           hoverBorderWidth: 1,
           backgroundColor:
-            GeneralData.length <= 8 ? DefaultBgColor : chartBgColor,
+            GeneralData.length <= 8 ? DEFAULT_BG_COLOR : chartBgColor,
         },
       ],
     }),

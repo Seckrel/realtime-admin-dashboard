@@ -9,7 +9,8 @@ import {
   PointElement,
   LineElement, 
   Legend,
-  Tooltip
+  Tooltip,
+  BarElement
 } from "chart.js";
 
 Chart.register(
@@ -20,7 +21,8 @@ Chart.register(
   PointElement,
   LineElement,
   Legend,
-  Tooltip
+  Tooltip,
+  BarElement
 );
 
 const Temp = () => <>{"temp"}</>;

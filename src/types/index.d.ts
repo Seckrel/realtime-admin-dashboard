@@ -1,12 +1,24 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface ISubModules {
+  id: number;
+  name: string;
+  active: boolean;
+  statusCode: string;
+  lastTimeChecked: string;
+  state: boolean;
+  activePercentage: number;
+}
+
 export interface IData {
   id: number;
   name: string;
   online: boolean;
   today: number;
   lastSevenDay: number[];
+  subModules: ISubModules[];
 }
+
 
 export type TToogleGeneral = "General" | number;
 
