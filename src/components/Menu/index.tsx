@@ -15,6 +15,7 @@ import {
   IconMoonStars,
 } from "@tabler/icons";
 import { Link } from "wouter";
+import { useEffect } from "react";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -88,12 +89,18 @@ const mockdata = [
 ];
 
 function Menu() {
-  const [active, setActive] = useLocalStorage({
+  const [active, setActive, remove] = useLocalStorage({
     key: "active-tab",
     defaultValue: 0,
   });
+
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
+
+  useEffect(() => {
+    addEventListener("beforeunload", () => remove());
+    return () => removeEventListener("beforeunload", () => remove());
+  }, []);
 
   const links = mockdata.map((link, index) => (
     <NavbarLink
