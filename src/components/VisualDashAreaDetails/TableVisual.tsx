@@ -1,4 +1,4 @@
-import { Paper, Table } from "@mantine/core";
+import { Paper, Table, Switch } from "@mantine/core";
 import { IconCheck, IconX } from "@tabler/icons";
 import { ISubModules } from "../../types";
 
@@ -15,11 +15,18 @@ const TRow = ({ subModule }: any) => (
     <td>{subModule.id}</td>
     <td>{subModule.name}</td>
     <td>
-      {subModule.active ? <IconCheck color="green" /> : <IconX color="red" />}
+      {subModule.active ? (
+        <IconCheck className={"icon-check icon-check-green"} />
+      ) : (
+        <IconX className={"icon-check icon-check-red"} />
+      )}
     </td>
     <td>{subModule.statusCode}</td>
     <td>{subModule.lastTimeChecked}</td>
-    <td>{subModule.state}</td>
+    <td>
+      <Switch checked={subModule.state} />
+    </td>
+    <td>{subModule.activePercentage}%</td>
   </tr>
 );
 

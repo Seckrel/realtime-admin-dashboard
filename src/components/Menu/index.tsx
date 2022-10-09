@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLocalStorage } from "@mantine/hooks";
 import {
   Navbar,
   Tooltip,
@@ -88,7 +88,10 @@ const mockdata = [
 ];
 
 function Menu() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useLocalStorage({
+    key: "active-tab",
+    defaultValue: 0,
+  });
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
 

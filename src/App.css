@@ -4,6 +4,10 @@
   font-size: 12px;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 section {
   display: flex;
 }
@@ -24,4 +28,40 @@ main {
 .main-spacing {
   margin-top: var(--mantine-spacing-xs);
   padding: var(--mantine-spacing-md);
+}
+
+.center-full {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(12px) invert(0.1) grayscale(0) brightness(0.7);
+}
+
+.center-full > div {
+  width: 70vw;
+  height: 70vh;
+  filter: none;
+  z-index: 999;
+  padding: var(--mantine-spacing-md);
+  background-color: #e8e5df;
+  backdrop-filter: blur(10px);
+  filter: drop-shadow(var(--mantine-shadow-xl));
+}
+
+
+.icon-check {
+  border-radius: 50%;
+}
+
+.icon-check-green {
+  background-color: green;
+}
+
+.icon-check-red {
+  background-color: red;
 }

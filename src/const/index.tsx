@@ -10,3 +10,5 @@ export const  DEFAULT_BG_COLOR = [
     "rgb(192, 75, 255)",
     "rgb(203, 192, 86)",
   ];
+
+  export const Chart_Paddding_X = "0px 20px";

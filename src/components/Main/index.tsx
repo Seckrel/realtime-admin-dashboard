@@ -1,5 +1,6 @@
 import { Route, Switch } from "wouter";
 import DashBoard from "../../pages/home";
+import AccountAlarms from "../../pages/AccountAlarm";
 import {
   Chart,
   RadialLinearScale,
@@ -25,14 +26,13 @@ Chart.register(
   BarElement
 );
 
-const Temp = () => <>{"temp"}</>;
 
 function Main() {
   return (
     <div className="main-spacing">
       <Switch>
         <Route path="/" component={DashBoard} />
-        <Route path="/temp" component={Temp} />
+        <Route path="/temp" component={AccountAlarms} />
       </Switch>
     </div>
   );
