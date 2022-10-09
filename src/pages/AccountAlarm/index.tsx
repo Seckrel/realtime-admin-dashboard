@@ -1,5 +1,21 @@
 import { IAlarm } from "../../types/accoundAlaram";
-import { Paper, Table, Box } from "@mantine/core";
+import { Paper, Table, Box, clsx, createStyles } from "@mantine/core";
+import { Key } from "react";
+
+interface ITBodyProps {
+  alarms: IAlarm[];
+  classes: Record<Key, string>;
+}
+
+interface ITHeadProps {
+  hnames: string[];
+}
+
+const useStyles = createStyles((theme) => ({
+  stripped: {
+    backgroundColor: theme.colorScheme === "light" ? "#eee" : "#131313",
+  },
+}));
 
 const GENERAL_ALARMS: IAlarm[] = [
   {
@@ -39,7 +55,7 @@ const GENERAL_ALARMS: IAlarm[] = [
   },
 ];
 
-const THead = ({ hnames }: { hnames: string[] }) => (
+const THead = ({ hnames }: ITHeadProps) => (
   <thead>
     {hnames.map((hname) => (
       <Box component="th" py={"lg"}>
@@ -49,16 +65,24 @@ const THead = ({ hnames }: { hnames: string[] }) => (
   </thead>
 );
 
-const TBody = ({ alarms }: { alarms: IAlarm[] }) => (
+const TBody = ({ alarms, classes }: ITBodyProps) => (
   <tbody>
     {alarms.map((alarm, index) => (
       <>
-        <tr key={index}>
-          <td colSpan={3}>{alarm.accountName}</td>
+        <tr
+          key={index}
+          className={clsx({
+            [classes.stripped]: index % 2 === 0,
+          })}
+        >
+          <td rowSpan={alarm.alaramList.length + 1}>{alarm.accountName}</td>
         </tr>
-
         {alarm.alaramList.map((alarmState) => (
-          <tr>
+          <tr
+            className={clsx({
+              [classes.stripped]: index % 2 === 0,
+            })}
+          >
             <td>{alarmState.name}</td>
             <td>{alarmState.state ? "true" : "false"}</td>
           </tr>
@@ -69,11 +93,12 @@ const TBody = ({ alarms }: { alarms: IAlarm[] }) => (
 );
 
 function AccountAlarms() {
+  const { classes } = useStyles();
   return (
     <Paper>
-      <Table verticalSpacing={"xl"} striped highlightOnHover>
+      <Table verticalSpacing={"xl"} highlightOnHover>
         <THead hnames={Object.keys(GENERAL_ALARMS[0].alaramList[0])} />
-        <TBody alarms={GENERAL_ALARMS} />
+        <TBody alarms={GENERAL_ALARMS} classes={classes} />
       </Table>
     </Paper>
   );

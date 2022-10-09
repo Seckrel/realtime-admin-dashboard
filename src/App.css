@@ -53,7 +53,6 @@ main {
   filter: drop-shadow(var(--mantine-shadow-xl));
 }
 
-
 .icon-check {
   border-radius: 50%;
 }
