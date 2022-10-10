@@ -24,7 +24,7 @@ function VisualDashAreaGeneral() {
           ))}
         </Grid>
       </Paper>
-      <Paper shadow={"sm"} mt={-30} p={"sm"} pt={40} sx={{ zIndex: 1 }}>
+      <Paper shadow={"sm"} p={"sm"} pt={40} sx={{ zIndex: 1 }}>
         <PolarAreaChart GeneralData={GeneralData} />
       </Paper>
     </Stack>

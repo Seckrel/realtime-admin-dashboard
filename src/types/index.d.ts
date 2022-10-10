@@ -22,6 +22,17 @@ export interface IData {
 }
 
 
+export interface IRecords {
+  sla_service: string;
+  application_id: number;
+  main_application_name: string;
+  main_application_id: number;
+  application_name: string;
+  result_code: 200 | 500;
+  result: string;s
+}
+
+
 export type TToogleGeneral = "General" | number;
 
 export type TSetToggleGeneral = Dispatch<SetStateAction<IToogleGeneral>>;

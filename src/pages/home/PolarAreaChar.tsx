@@ -33,9 +33,9 @@ function PolarAreaChart(props: IProps) {
       const worker = new Worker(ColorGenWorker);
       worker.postMessage(GeneralData.length);
       worker.onmessage = (e) => setChartBgColor(e.data);
+      return () => worker.terminate();
     }
   }, [GeneralData.length]);
-
 
   const dataMemo = useMemo(
     () => ({
@@ -59,6 +59,7 @@ function PolarAreaChart(props: IProps) {
     animation: {
       duration: 500,
     },
+    aspectRatio: 2 / 1,
     plugins: {
       legend: {
         position: "bottom",

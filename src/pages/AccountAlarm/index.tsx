@@ -1,5 +1,13 @@
 import { IAlarm } from "../../types/accoundAlaram";
-import { Paper, Table, Box, clsx, createStyles } from "@mantine/core";
+import {
+  Paper,
+  Table,
+  Box,
+  clsx,
+  createStyles,
+  Text,
+  Title,
+} from "@mantine/core";
 import { Key } from "react";
 
 interface ITBodyProps {
@@ -59,7 +67,9 @@ const THead = ({ hnames }: ITHeadProps) => (
   <thead>
     {hnames.map((hname) => (
       <Box component="th" py={"lg"}>
-        {hname}
+        <Title transform="capitalize" align="center" order={3}>
+          {hname}
+        </Title>
       </Box>
     ))}
   </thead>
@@ -75,7 +85,11 @@ const TBody = ({ alarms, classes }: ITBodyProps) => (
             [classes.stripped]: index % 2 === 0,
           })}
         >
-          <td rowSpan={alarm.alaramList.length + 1}>{alarm.accountName}</td>
+          <td rowSpan={alarm.alaramList.length + 1}>
+            <Title align="center" transform="capitalize" order={4}>
+              {alarm.accountName}
+            </Title>
+          </td>
         </tr>
         {alarm.alaramList.map((alarmState) => (
           <tr
@@ -83,8 +97,16 @@ const TBody = ({ alarms, classes }: ITBodyProps) => (
               [classes.stripped]: index % 2 === 0,
             })}
           >
-            <td>{alarmState.name}</td>
-            <td>{alarmState.state ? "true" : "false"}</td>
+            <td>
+              <Text align="center" size={"md"}>
+                {alarmState.name}
+              </Text>
+            </td>
+            <td>
+              <Text align="center" size={"md"}>
+                {alarmState.state ? "true" : "false"}
+              </Text>
+            </td>
           </tr>
         ))}
       </>

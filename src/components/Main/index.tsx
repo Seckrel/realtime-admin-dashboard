@@ -32,7 +32,7 @@ function Main() {
     <div className="main-spacing">
       <Switch>
         <Route path="/" component={DashBoard} />
-        <Route path="/temp" component={AccountAlarms} />
+        <Route path="/alarms" component={AccountAlarms} />
       </Switch>
     </div>
   );

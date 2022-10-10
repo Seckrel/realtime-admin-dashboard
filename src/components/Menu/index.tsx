@@ -5,11 +5,11 @@ import {
   UnstyledButton,
   createStyles,
   Stack,
-  useMantineColorScheme,
+  useMantineColorScheme
 } from "@mantine/core";
 import {
   TablerIcon,
-  IconHome2,
+  IconAlarm,
   IconGauge,
   IconSunHigh as SunHigh,
   IconMoonStars,
@@ -85,7 +85,7 @@ function NavbarLink({
 
 const mockdata = [
   { icon: IconGauge, label: "Dashboard", link: "/" },
-  { icon: IconHome2, label: "Home", link: "/temp" },
+  { icon: IconAlarm, label: "Home", link: "/alarms" },
 ];
 
 function Menu() {
