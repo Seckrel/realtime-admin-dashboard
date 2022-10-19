@@ -29,7 +29,7 @@ export interface IRecords {
   main_application_id: number;
   application_name: string;
   result_code: 200 | 500;
-  result: string;s
+  result: string;
 }
 
 

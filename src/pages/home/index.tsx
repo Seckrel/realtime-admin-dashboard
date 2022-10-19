@@ -1,5 +1,5 @@
 import VisualDashAreaGeneral from "./VisualDashAreaGeneral";
-import { IData, IDataContext, TToogleGeneral } from "../../types";
+import { IData, IDataContext, TToogleGeneral, IRecords } from "../../types";
 import { createContext, useState } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import VisualDashAreaDetails from "../../components/VisualDashAreaDetails";
@@ -646,6 +646,80 @@ const GeneralData: IData[] = [
   },
 ];
 
+// const GeneralData: IRecords[] = [
+//   {
+//     sla_service: "string",
+//     application_id: 0,
+//     main_application_name: "Server 1",
+//     main_application_id: 0,
+//     application_name: "App Server 1",
+//     result_code: 500,
+//     result: "Fail",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 1,
+//     main_application_name: "Server 2",
+//     main_application_id: 1,
+//     application_name: "App Server 2",
+//     result_code: 500,
+//     result: "Fail",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 2,
+//     main_application_name: "Server 3",
+//     main_application_id: 2,
+//     application_name: "App Server 3",
+//     result_code: 200,
+//     result: "Success",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 3,
+//     main_application_name: "Server 4",
+//     main_application_id: 3,
+//     application_name: "App Server 4",
+//     result_code: 200,
+//     result: "Success",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 4,
+//     main_application_name: "Server 5",
+//     main_application_id: 4,
+//     application_name: "App Server 5",
+//     result_code: 200,
+//     result: "Success",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 5,
+//     main_application_name: "Server 6",
+//     main_application_id: 5,
+//     application_name: "App Server 6",
+//     result_code: 200,
+//     result: "Success",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 6,
+//     main_application_name: "Server 7",
+//     main_application_id: 6,
+//     application_name: "App Server 7",
+//     result_code: 200,
+//     result: "Success",
+//   },
+//   {
+//     sla_service: "string",
+//     application_id: 7,
+//     main_application_name: "Server 8",
+//     main_application_id: 7,
+//     application_name: "App Server 8",
+//     result_code: 200,
+//     result: "Success",
+//   },
+// ];
 
 export const GeneralDataContext = createContext<IDataContext | null>(null);
 
